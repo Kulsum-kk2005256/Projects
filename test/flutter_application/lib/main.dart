@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 // import 'package:flutter_notes/pages/view_notes.dart';
 
@@ -7,8 +9,10 @@ void main() {
   runApp(const MyApp());
 }
 
-void addToList(var json) {}
 List list = [];
+void addToList(var json) {
+  list.add(json);
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -17,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Notes',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
       home: MyHomePage(),
     );
@@ -60,14 +64,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Container() {}
+// var myJSON = jsonDecode(incomingJSONText);
+// _controller = QuillController(
+//           document: Document.fromJson(myJSON),
+//           selection: TextSelection.collapsed(offset: 0));
+  VewNotes() {
+    return ListView.builder(
+        padding: const EdgeInsets.all(100),
+        itemCount: list.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(child: Text('${jsonDecode(list[index])}')),
+          );
+        });
+  }
 
-  Widget buildPages() {
+  buildPages() {
     switch (index) {
       case 0:
         return AddNotes();
       default:
-        return Container();
+        return VewNotes();
     }
   }
 }

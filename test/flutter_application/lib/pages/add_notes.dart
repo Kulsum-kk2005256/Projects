@@ -16,26 +16,45 @@ class AddNoteState extends State<AddNotes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // Add your onPressed code here!
-          m.addToList(jsonEncode(_controller.document.toDelta().toJson()));
-          _controller.clear();
-        },
-        label: text.Text('Save'),
-        icon: const Icon(Icons.save),
-        backgroundColor: Colors.blue,
-      ),
       appBar: AppBar(
-        centerTitle: true,
-        title: text.Text('Add Note'),
-      ),
+          centerTitle: true,
+          title: text.Text('Add Stuff'),
+          leading: GestureDetector(
+            onTap: () {/* Write listener code here */},
+            child: Icon(
+              Icons.close, // add custom icons also
+            ),
+          ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    m.addToList(
+                        jsonEncode(_controller.document.toDelta().toJson()));
+                    _controller.clear();
+                  },
+                  child: Icon(
+                    Icons.save,
+                    size: 26.0,
+                  ),
+                )),
+          ]),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Title',
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 26),
               child: QuillToolbar.basic(
                 controller: _controller,
                 showLink: false,
@@ -46,15 +65,20 @@ class AddNoteState extends State<AddNotes> {
                 showVideoButton: false,
                 showCodeBlock: false,
                 multiRowsDisplay: false,
+                showAlignmentButtons: false,
+                showCenterAlignment: false,
+                showDirection: false,
+                showRedo: false,
+                showUndo: false,
               ),
             ),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
               child: Container(
                 decoration: BoxDecoration(boxShadow: [
                   BoxShadow(
-                    color: Colors.lightBlueAccent,
+                    color: Colors.deepPurpleAccent,
                     offset: const Offset(
                       5.0,
                       5.0,
@@ -73,6 +97,15 @@ class AddNoteState extends State<AddNotes> {
                     QuillEditor.basic(controller: _controller, readOnly: false),
               ),
             )),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Tags',
+                ),
+              ),
+            ),
           ],
         ),
       ),
