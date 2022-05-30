@@ -13,6 +13,14 @@ class AddNotes extends StatefulWidget {
 QuillController _controller = QuillController.basic();
 
 class AddNoteState extends State<AddNotes> {
+  final myController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +40,9 @@ class AddNoteState extends State<AddNotes> {
                   onTap: () {
                     m.addToList(
                         jsonEncode(_controller.document.toDelta().toJson()));
+                    m.addToTitleList(myController.text);
                     _controller.clear();
+                    myController.clear();
                   },
                   child: Icon(
                     Icons.save,
@@ -47,6 +57,7 @@ class AddNoteState extends State<AddNotes> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
+                controller: myController,
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
                   labelText: 'Title',
@@ -82,36 +93,24 @@ class AddNoteState extends State<AddNotes> {
                 child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
               child: Container(
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: Colors.deepPurpleAccent,
-                    offset: const Offset(
-                      5.0,
-                      5.0,
-                    ),
-                    blurRadius: 10.0,
-                    spreadRadius: 2.0,
-                  ),
-                  BoxShadow(
-                    color: Colors.white,
-                    offset: const Offset(0.0, 0.0),
-                    blurRadius: 0.0,
-                    spreadRadius: 0.0,
-                  ),
-                ]),
+                decoration:
+                    BoxDecoration(border: Border.all(color: Colors.deepPurple)),
                 child:
                     QuillEditor.basic(controller: _controller, readOnly: false),
               ),
             )),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Tags',
-                ),
-              ),
+            SizedBox(
+              height: 50, // <-- SEE HERE
             ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            //   child: TextFormField(
+            //     decoration: const InputDecoration(
+            //       border: UnderlineInputBorder(),
+            //       labelText: 'Tags',
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -9,9 +9,14 @@ void main() {
   runApp(const MyApp());
 }
 
+List titleList = [];
 List list = [];
 void addToList(var json) {
   list.add(json);
+}
+
+void addToTitleList(var title) {
+  titleList.add(title);
 }
 
 class MyApp extends StatelessWidget {
@@ -68,14 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
 // _controller = QuillController(
 //           document: Document.fromJson(myJSON),
 //           selection: TextSelection.collapsed(offset: 0));
-  VewNotes() {
+  ViewNotes() {
     return ListView.builder(
         padding: const EdgeInsets.all(100),
         itemCount: list.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Center(child: Text('${jsonDecode(list[index])}')),
+            child: Center(
+                child: Text(
+                    'Title: ${titleList[index]}\nNote:  ${jsonDecode(list[index])}')),
           );
         });
   }
@@ -85,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return AddNotes();
       default:
-        return VewNotes();
+        return ViewNotes();
     }
   }
 }
