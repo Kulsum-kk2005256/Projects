@@ -1,36 +1,32 @@
-import 'package:flutter_application_search/page/filter_repositories_page.dart';
-import 'package:flutter_application_search/page/filter_users_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_notes/pages/view_notes.dart';
 
-Future main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+import 'pages/add_notes.dart';
 
-  runApp(MyApp());
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'Search Github Api';
-
+  const MyApp({super.key});
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: title,
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: MainPage(),
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Notes',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
 }
 
-class MainPage extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
 
   @override
@@ -49,12 +45,12 @@ class _MainPageState extends State<MainPage> {
       currentIndex: index,
       items: [
         BottomNavigationBarItem(
-          icon: Text('Search', style: style),
-          label: 'Repositories',
+          icon: Text('', style: style),
+          label: 'Add Notes',
         ),
         BottomNavigationBarItem(
-          icon: Text('Search', style: style),
-          label: 'Users',
+          icon: Text('', style: style),
+          label: 'View Notes',
         ),
       ],
       onTap: (int index) => setState(() => this.index = index),
@@ -64,11 +60,9 @@ class _MainPageState extends State<MainPage> {
   Widget buildPages() {
     switch (index) {
       case 0:
-        return RepoPage();
-      case 1:
-        return FilterNetworkListPage();
+        return AddNotes();
       default:
-        return Container();
+        return AddNotes();
     }
   }
 }
