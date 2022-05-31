@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter/src/widgets/text.dart' as text;
 import 'package:flutter_application/main.dart' as m;
+import 'package:markdown/markdown.dart' as md;
+import 'package:markdown/markdown.dart';
+import 'package:markdown_quill/markdown_quill.dart';
 
 class AddNotes extends StatefulWidget {
   @override
@@ -38,8 +41,16 @@ class AddNoteState extends State<AddNotes> {
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    m.addToList(
-                        jsonEncode(_controller.document.toDelta().toJson()));
+                    final mdDocument = md.Document(encodeHtml: false);
+
+                    final mdToDelta =
+                        MarkdownToDelta(markdownDocument: mdDocument);
+
+                    final deltaToMd = DeltaToMarkdown();
+                    final markdown =
+                        deltaToMd.convert(_controller.document.toDelta());
+
+                    m.addToList(markdownToHtml(markdown));
                     m.addToTitleList(myController.text);
                     _controller.clear();
                     myController.clear();
@@ -99,18 +110,18 @@ class AddNoteState extends State<AddNotes> {
                     QuillEditor.basic(controller: _controller, readOnly: false),
               ),
             )),
-            SizedBox(
-              height: 50, // <-- SEE HERE
-            ),
-            // Padding(
-            //   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            //   child: TextFormField(
-            //     decoration: const InputDecoration(
-            //       border: UnderlineInputBorder(),
-            //       labelText: 'Tags',
-            //     ),
-            //   ),
+            // SizedBox(
+            //   height: 50, // <-- SEE HERE
             // ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: UnderlineInputBorder(),
+                  labelText: 'Tags',
+                ),
+              ),
+            ),
           ],
         ),
       ),

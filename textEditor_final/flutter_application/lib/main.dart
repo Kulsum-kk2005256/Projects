@@ -81,8 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: Center(
-                child: Text(
-                    'Title: ${titleList[index]}\nNote:  ${jsonDecode(list[index])}')),
+                child:
+                    Text('Title: ${titleList[index]}\nNote:  ${list[index]}')),
           );
         });
   }
