@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 // import 'package:flutter_notes/pages/view_notes.dart';
 
@@ -28,12 +26,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -48,19 +48,20 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 
   Widget buildBottomBar() {
-    final style = TextStyle(color: Colors.white);
+    const style = TextStyle(color: Colors.white);
 
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).primaryColor,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.white70,
       currentIndex: index,
+      // ignore: prefer_const_literals_to_create_immutables
       items: [
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Text('', style: style),
           label: 'Add Notes',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Text('', style: style),
           label: 'View Notes',
         ),
@@ -69,10 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-// var myJSON = jsonDecode(incomingJSONText);
-// _controller = QuillController(
-//           document: Document.fromJson(myJSON),
-//           selection: TextSelection.collapsed(offset: 0));
+  // ignore: non_constant_identifier_names
   ViewNotes() {
     return ListView.builder(
         padding: const EdgeInsets.all(100),
@@ -90,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
   buildPages() {
     switch (index) {
       case 0:
-        return AddNotes();
+        return const AddNotes();
       default:
         return ViewNotes();
     }

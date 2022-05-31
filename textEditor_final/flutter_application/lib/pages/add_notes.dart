@@ -1,14 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+// ignore: implementation_imports
 import 'package:flutter/src/widgets/text.dart' as text;
 import 'package:flutter_application/main.dart' as m;
-import 'package:markdown/markdown.dart' as md;
 import 'package:markdown/markdown.dart';
 import 'package:markdown_quill/markdown_quill.dart';
 
 class AddNotes extends StatefulWidget {
+  const AddNotes({super.key});
+
   @override
   AddNoteState createState() => AddNoteState();
 }
@@ -29,33 +29,27 @@ class AddNoteState extends State<AddNotes> {
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: text.Text('Add Stuff'),
+          title: const text.Text('Add Stuff'),
           leading: GestureDetector(
             onTap: () {/* Write listener code here */},
-            child: Icon(
+            child: const Icon(
               Icons.close, // add custom icons also
             ),
           ),
           actions: <Widget>[
             Padding(
-                padding: EdgeInsets.only(right: 20.0),
+                padding: const EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
                   onTap: () {
-                    final mdDocument = md.Document(encodeHtml: false);
-
-                    final mdToDelta =
-                        MarkdownToDelta(markdownDocument: mdDocument);
-
-                    final deltaToMd = DeltaToMarkdown();
-                    final markdown =
-                        deltaToMd.convert(_controller.document.toDelta());
+                    final markdown = DeltaToMarkdown()
+                        .convert(_controller.document.toDelta());
 
                     m.addToList(markdownToHtml(markdown));
                     m.addToTitleList(myController.text);
                     _controller.clear();
                     myController.clear();
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.save,
                     size: 26.0,
                   ),
@@ -66,7 +60,7 @@ class AddNoteState extends State<AddNotes> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
                 controller: myController,
                 decoration: const InputDecoration(
@@ -76,7 +70,8 @@ class AddNoteState extends State<AddNotes> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
               child: QuillToolbar.basic(
                 controller: _controller,
                 showBoldButton: true,
@@ -102,7 +97,7 @@ class AddNoteState extends State<AddNotes> {
             ),
             Expanded(
                 child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 0),
               child: Container(
                 decoration:
                     BoxDecoration(border: Border.all(color: Colors.deepPurple)),
@@ -114,7 +109,7 @@ class AddNoteState extends State<AddNotes> {
             //   height: 50, // <-- SEE HERE
             // ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
                 decoration: const InputDecoration(
                   border: UnderlineInputBorder(),
